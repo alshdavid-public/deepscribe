@@ -1,1 +1,3 @@
-[https://openchat-lite.davidalsh.com](https://openchat-lite.davidalsh.com)
+[https://deepscribe.davidalsh.com/](https://deepscribe.davidalsh.com/)
+
+SSL certificate is broken because Github pages is weird
