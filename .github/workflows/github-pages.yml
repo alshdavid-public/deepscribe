@@ -17,23 +17,26 @@ concurrency:
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    # environment:
+      # name: github-pages
+      # url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: mkdir $HOME/.local/nodejs && curl -L https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-linux-amd64.tar.gz | tar -xzf - -C $HOME/.local/nodejs && echo "$HOME/.local/nodejs/bin" >> $GITHUB_PATH
+      - run: node --version
+      - run: which node
+      
+      # - run: eval $(curl -sSf sh.davidalsh.com/nodejs.sh | sh)
+      # - run: npm install
+      # - run: npm run build
 
-      - run: eval $(curl -sSf sh.davidalsh.com/nodejs.sh | sh)
-      - run: npm install
-      - run: npm run build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: "dist"
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # - name: Setup Pages
+      #   uses: actions/configure-pages@v5
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     path: "dist"
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v4

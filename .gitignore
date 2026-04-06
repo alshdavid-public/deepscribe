@@ -5,6 +5,9 @@ dist/
 build/
 publish/
 
+.terraform/.terraform
+.terraform/.terraform.lock.hcl
+
 # dependencies
 node_modules/
 
