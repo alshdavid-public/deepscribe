@@ -29,6 +29,7 @@ jobs:
       - run: ls -l $HOME/.local
       - run: ls -l $HOME/.local/nodejs
       - run: ls -l $HOME/.local/nodejs/bin
+      - run: ls -l $HOME/.local/nodejs/lib
       - run: npm install
       - run: npm run build
 
