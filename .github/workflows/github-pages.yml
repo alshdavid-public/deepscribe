@@ -24,9 +24,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: mkdir -p $HOME/.local/nodejs && curl -L https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-linux-amd64.tar.gz | tar -xzf - -C $HOME/.local/nodejs && echo "$HOME/.local/nodejs/bin" >> $GITHUB_PATH
-      - run: node --version
-      - run: which node
-      
+      - run: mkdir -p $HOME/.local/terraform && curl -L https://github.com/alshdavid/xpkg/releases/download/terraform-latest/terraform-linux-amd64.tar.gz | tar -xzf - -C $HOME/.local/terraform && echo "$HOME/.local/terraform" >> $GITHUB_PATH
+      - run: terraform --version
+      - run: aws --version
       # - run: eval $(curl -sSf sh.davidalsh.com/nodejs.sh | sh)
       # - run: npm install
       # - run: npm run build
