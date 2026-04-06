@@ -25,18 +25,12 @@ jobs:
       - uses: actions/checkout@v4
       - run: mkdir -p $HOME/.local/nodejs && curl -L https://github.com/alshdavid/xpkg/releases/download/nodejs-latest/nodejs-linux-amd64.tar.gz | tar -xzf - -C $HOME/.local/nodejs && echo "$HOME/.local/nodejs/bin" >> $GITHUB_PATH
       - run: mkdir -p $HOME/.local/terraform && curl -L https://github.com/alshdavid/xpkg/releases/download/terraform-latest/terraform-linux-amd64.tar.gz | tar -xzf - -C $HOME/.local/terraform && echo "$HOME/.local/terraform" >> $GITHUB_PATH
-      - run: terraform --version
-      - run: aws --version
-      # - run: eval $(curl -sSf sh.davidalsh.com/nodejs.sh | sh)
-      # - run: npm install
-      # - run: npm run build
 
-      # - name: Setup Pages
-      #   uses: actions/configure-pages@v5
-      # - name: Upload artifact
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     path: "dist"
-      # - name: Deploy to GitHub Pages
-      #   id: deployment
-      #   uses: actions/deploy-pages@v4
+      - run: npm install
+      - run: npm run build
+
+      - run: cd .terraform && terraform init && terraform validate && terraform apply --auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-southeast-2
