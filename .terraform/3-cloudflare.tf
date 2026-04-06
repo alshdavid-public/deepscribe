@@ -5,4 +5,5 @@ resource "cloudflare_record" "deepscribe" {
   type    = "CNAME"
   ttl     = 1
   proxied = true
+  allow_overwrite = true
 }
