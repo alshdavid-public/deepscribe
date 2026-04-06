@@ -21,7 +21,7 @@ resource "aws_s3_object" "static_files" {
   key          = "${var.project_name}/${each.value}"
   source       = "${path.module}/../dist/${each.value}"
   content_type = lookup(local.mime_types, element(split(".", each.value), length(split(".", each.value)) - 1), "application/octet-stream")
-  etag         = filemd5("${path.module}/../dist/${each.value}")
+  source_hash  = filemd5("${path.module}/../dist/${each.value}")
 }
 
 resource "terraform_data" "cloudfront_invalidation" {
