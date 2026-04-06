@@ -24,7 +24,16 @@ resource "aws_s3_object" "static_files" {
   etag         = filemd5("${path.module}/../dist/${each.value}")
 }
 
+resource "terraform_data" "cloudfront_invalidation" {
+  triggers_replace = [
+    for obj in aws_s3_object.static_files : obj.etag
+  ]
 
-# output "bucket_url" {
-#   value = "http://${aws_s3_bucket_website_configuration.s3_website.website_endpoint}"
-# }
+  provisioner "local-exec" {
+    command = <<EOT
+      aws cloudfront create-invalidation \
+        --distribution-id ${var.cloudfront_distribution_id} \
+        --paths "/${var.project_name}/*"
+    EOT
+  }
+}
