@@ -14,7 +14,7 @@
     "jsx": "react",
     "jsxFactory": "h",
     "types": [
-      "./.config/typings/import-map.d.ts"
+      "./typings/scss.d.ts",
     ]
   },
   "include": ["src/**/*"],

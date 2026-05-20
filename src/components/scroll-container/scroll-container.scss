@@ -1,15 +1,16 @@
 .component-scroll-container {
-  transform: rotateX(180deg);
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
   height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
 
   &::-webkit-scrollbar {
     display: none;
   }
 
   & > * {
-    transform: rotateX(180deg);
+    width: 100%;
   }
 }

@@ -101,24 +101,49 @@ export class HTMLContentEditable extends HTMLElement {
       this.dispatchEvent(new InputEvent("input", { bubbles: true }));
     });
 
-    this.addEventListener("paste", (e) => {
+    this.#$editable.addEventListener("paste", (e) => {
+      // 1. Prevent default formatting/pasting
+      e.preventDefault();
+      e.stopPropagation();
+
+      // 2. Get plain text from clipboard
       const text = e.clipboardData?.getData("text/plain");
       if (!text) return;
 
-      const selection = window.getSelection();
-      if (!selection?.rangeCount) return;
+      // 3. Get the selection specifically from the ShadowRoot context
+      // Fallback to document.getSelection() if shadowRoot.getSelection() isn't available
+      const selection = this.shadowRoot.getSelection
+        ? this.shadowRoot.getSelection()
+        : Array.from(window.getSelection()).find((s) =>
+            this.shadowRoot.contains(s.anchorNode),
+          );
 
-      const range = selection.getRangeAt(0);
+      // Alternative robust approach: Use the document selection but verify the range
+      const domSelection = window.getSelection();
+      if (!domSelection || domSelection.rangeCount === 0) return;
+
+      const range = domSelection.getRangeAt(0);
+
+      // 4. Ensure the range is actually inside our editable element
+      // This is the "fix" for pasting "above" the element
+      if (!this.#$editable.contains(range.commonAncestorContainer)) {
+        // If the selection is lost or outside, move it to the end of our text
+        range.selectNodeContents(this.#$editable);
+        range.collapse(false);
+      }
+
+      // 5. Insert the text
       range.deleteContents();
-
       const textNode = document.createTextNode(text);
       range.insertNode(textNode);
 
+      // 6. Move cursor to after the inserted text
       range.setStartAfter(textNode);
       range.collapse(true);
-      selection.removeAllRanges();
-      selection.addRange(range);
+      domSelection.removeAllRanges();
+      domSelection.addRange(range);
 
+      // 7. Update internal state and fire event
       this.#value = this.#$editable.innerText;
       this.dispatchEvent(
         new InputEvent("input", { bubbles: true, composed: true }),

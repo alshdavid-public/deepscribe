@@ -12,7 +12,8 @@
     "jsx": "react",
     "jsxFactory": "h",
     "types": [
-      "node"
+      "node",
+      "./typings/scss.d.ts",
     ]
   },
   "include": [

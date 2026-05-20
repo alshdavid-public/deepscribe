@@ -7,6 +7,7 @@ import {
 import { rx } from "../platform/rx/index.ts";
 
 export class LMStudioService extends EventTarget {
+  @rx accessor apiKey: TextField;
   @rx accessor apiAddress: TextField;
   @rx accessor selectedModel: TextField;
   @rx accessor models: Array<Model>;
@@ -19,6 +20,7 @@ export class LMStudioService extends EventTarget {
     this.client = null;
     this.selectedModel = new TextField();
     this.apiAddress = new TextField();
+    this.apiKey = new TextField();
     this.connected = false;
     this.connecting = false;
     this.models = [];
@@ -32,6 +34,7 @@ export class LMStudioService extends EventTarget {
     this.client = null;
     this.selectedModel = new TextField();
     this.apiAddress = new TextField();
+    this.apiKey = new TextField();
     this.connected = false;
     this.connecting = false;
     this.models = [];
@@ -46,6 +49,11 @@ export class LMStudioService extends EventTarget {
     try {
       this.client = new LMStudioConnection({
         address: this.apiAddress.value,
+        customHeaders: {
+          Authorization: this.apiKey.value
+            ? `Bearer ${this.apiKey.value}`
+            : undefined,
+        },
       });
 
       // await new Promise((res) => setTimeout(res, 1000));

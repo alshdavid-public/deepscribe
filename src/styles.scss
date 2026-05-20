@@ -212,7 +212,12 @@ main .menu-connection p {
 }
 
 .side-bar-right {
+  overflow: scroll;
   border-left-width: 1px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @include desktop() {
     left: 100%;

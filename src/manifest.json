@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "OpenChatLite",
-  "short_name": "OpenChatLite",
+  "name": "DeepScribe",
+  "short_name": "DeepScribe",
   "description": "A lightweight chat interface for OpenAI compatible LLMs",
   "version": "0.1.0",
   "start_url": "/",

@@ -33,10 +33,12 @@ export class AppViewModel extends EventTarget {
     this.message = new TextField();
   }
 
-  // async onInit() {
-  //   this.api.apiAddress.value = "http://192.168.10.3:1234";
-  //   await this.api.connect();
-  // }
+  async onInit() {
+    // this.api.apiAddress.value = "http://localhost:1234";
+    // await this.api.connect();
+    // this.api.selectModel('liquid/lfm-2.5-1.2b-instruct:free')
+    // this.api.selectModel('google/gemma-4-e4b')
+  }
 
   async startChat() {
     if (!this.message.value) return;
@@ -165,6 +167,7 @@ function App() {
           <ConnectionIndicator
             onClick={vm.toggleMenuRight}
             connected={vm.api.connected}
+            children={">"}
           />
         </div>
         {vm.api.connected ? (
@@ -185,6 +188,14 @@ function App() {
                 value={vm.api.apiAddress.value}
                 onInput={vm.api.apiAddress.fromEvent}
                 placeholder="http://localhost:1234"
+              />
+            </label>
+            <label className="section" htmlFor="">
+              <h2>API Key</h2>
+              <Input
+                value={vm.api.apiKey.value}
+                onInput={vm.api.apiKey.fromEvent}
+                placeholder="Optional"
               />
             </label>
             {/* <p>Custom Headers</p> */}

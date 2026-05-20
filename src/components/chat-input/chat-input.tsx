@@ -31,7 +31,6 @@ export function ChatInput({
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      console.log(isMobileDevice);
       if (isMobileDevice) return;
       if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !e.metaKey) {
         e.preventDefault();

@@ -1,6 +1,6 @@
 export type LMStudioConnectionOptions = {
   address: string;
-  customHeaders?: Record<string, string>;
+  customHeaders?: Record<string, string | undefined>;
 };
 
 export type ChatMessage = {
@@ -41,7 +41,7 @@ export type Model = {
 
 export class LMStudioConnection {
   private address: string;
-  private customHeaders: Record<string, string>;
+  private customHeaders: Record<string, string | undefined>;
 
   constructor(options: LMStudioConnectionOptions) {
     this.address = options.address.replace(/\/$/, ""); // Remove trailing slash
