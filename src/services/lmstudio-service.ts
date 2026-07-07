@@ -51,7 +51,7 @@ export class LMStudioService extends EventTarget {
         address: this.apiAddress.value,
         customHeaders: {
           Authorization: this.apiKey.value
-            ? `Bearer ${this.apiKey.value}`
+            ? `${this.apiKey.value}`
             : undefined,
         },
       });
